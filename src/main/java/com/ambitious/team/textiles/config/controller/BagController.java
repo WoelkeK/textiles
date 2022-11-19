@@ -3,16 +3,13 @@ package com.ambitious.team.textiles.config.controller;
 import com.ambitious.team.textiles.config.api.exception.BagNotFoundException;
 import com.ambitious.team.textiles.config.model.Bag;
 import com.ambitious.team.textiles.config.service.BagService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.logging.Logger;
 
-@Controller
+@RestController
+@RequestMapping("/api/bags")
 public class BagController {
     private static final Logger LOGGER = Logger.getLogger(BagController.class.getName());
     private BagService bagService;
@@ -22,43 +19,37 @@ public class BagController {
     }
 
     // C - create
-    @GetMapping
-    public void createView() {
-        LOGGER.info("createView()");
-    }
-
-    @PostMapping
-    public void create(Bag bag) {
+    @PostMapping("/api/")
+    public Bag create(
+            @RequestBody Bag bag) {
         LOGGER.info("create(" + bag + ")");
         Bag createdBag = bagService.create(bag);
         LOGGER.info("create(...)" + createdBag);
+        return createdBag;
     }
 
     // R - read
-    public void read(
-            @PathVariable(name = "id") Long id, Bag bag)
+    @GetMapping("/api/bags/")
+    public Bag read(
+            @PathVariable(name = "id") Long id)
             throws BagNotFoundException {
-        LOGGER.info("read()");
+        LOGGER.info("read()"+ id);
         Bag readBag = bagService.read(id);
+        return readBag;
     }
 
     // U - update
-    @GetMapping
-    public void updateView(@PathVariable(name = "id") Long id, Bag bag)
-            throws BagNotFoundException {
-        LOGGER.info("updateView()" + id + "");
-        Bag updateBag = bagService.update(bag);
-    }
-
-    @PostMapping
-    public void update(Bag bag) {
+    @PutMapping("/api/bags/")
+    public Bag update(
+            @RequestBody Bag bag) {
         LOGGER.info("update(" + bag + ")");
         Bag updateBag = bagService.update(bag);
         LOGGER.info("update(...)" + updateBag);
+        return updateBag;
     }
 
     // D - delete
-    @GetMapping
+    @DeleteMapping("/api/bags/{id}")
     public void delete(
             @PathVariable(name = "id") Long id) throws BagNotFoundException {
         LOGGER.info("delete(" + id + ")");
@@ -66,9 +57,10 @@ public class BagController {
     }
 
     // L - list
-    @GetMapping
-    public void list(Bag bag) {
+    @GetMapping("/api/bags")
+    public List<Bag> list(Bag bag) {
         List<Bag> bags = bagService.list();
         LOGGER.info("list() = " + bags);
+        return bags;
     }
 }

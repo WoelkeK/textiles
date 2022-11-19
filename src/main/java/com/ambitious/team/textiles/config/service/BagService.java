@@ -3,11 +3,13 @@ package com.ambitious.team.textiles.config.service;
 import com.ambitious.team.textiles.config.api.exception.BagNotFoundException;
 import com.ambitious.team.textiles.config.model.Bag;
 import com.ambitious.team.textiles.config.repository.BagRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+@Service
 public class BagService {
     private static final Logger LOGGER = Logger.getLogger(BagService.class.getName());
     private BagRepository bagRepository;
