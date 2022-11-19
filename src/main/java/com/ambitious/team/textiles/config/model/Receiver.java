@@ -16,7 +16,7 @@ public class Receiver {
     private Long id;
     private String receiverId;
     private String name;
-    private String adrress;
+    private String address;
     private int carbonFootprint;
     private int tokens;
 
@@ -24,9 +24,9 @@ public class Receiver {
     public String toString() {
         return "Receiver{" +
                 "id=" + id +
-                ", ReceiverId='" + receiverId + '\'' +
-                ", name='" + name + '\'' +
-                ", adrress='" + adrress + '\'' +
+                ", ReceiverId= '" + receiverId + '\'' +
+                ", name= '" + name + '\'' +
+                ", adrress='" + address + '\'' +
                 ", carbonFootprint=" + carbonFootprint +
                 ", tokens=" + tokens +
                 '}';

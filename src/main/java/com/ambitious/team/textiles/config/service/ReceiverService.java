@@ -45,7 +45,7 @@ public class ReceiverService {
         editableReceiver.setId(receiver.getId());
         editableReceiver.setReceiverId(receiver.getReceiverId());
         editableReceiver.setName(receiver.getName());
-        editableReceiver.setAdrress(receiver.getAdrress());
+        editableReceiver.setAddress(receiver.getAddress());
         editableReceiver.setCarbonFootprint(receiver.getCarbonFootprint());
         editableReceiver.setTokens(receiver.getTokens());
         Receiver updatedReceiver = receiverRepository.save(receiver);
