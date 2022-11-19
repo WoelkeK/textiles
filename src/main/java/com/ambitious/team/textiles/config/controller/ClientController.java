@@ -1,5 +1,6 @@
 package com.ambitious.team.textiles.config.controller;
 
+import com.ambitious.team.textiles.config.api.exception.ClientNotFoundException;
 import com.ambitious.team.textiles.config.model.Client;
 import com.ambitious.team.textiles.config.service.ClientService;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,12 +37,10 @@ public class ClientController {
         return createdClient;
     }
 
-    @GetMapping("/{id}")
-    public Client read(@PathVariable Long id) {
-        LOGGER.info("read(" + id + ")");
-        var readClient = clientService.read(id);
-
-
+    @GetMapping("/{login}")
+    public Client read(@PathVariable String login) throws ClientNotFoundException {
+        LOGGER.info("read(" + login + ")");
+        var readClient = clientService.read(login);
         LOGGER.info("read(...)=" + readClient);
         return readClient;
     }
