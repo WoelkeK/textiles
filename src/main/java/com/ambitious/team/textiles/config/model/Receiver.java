@@ -25,7 +25,7 @@ public class Receiver {
         return "Receiver{" +
                 "id=" + id +
                 ", ReceiverId='" + receiverId + '\'' +
-                ", name='" + name + '\'' +
+                ", name= '" + name + '\'' +
                 ", adrress='" + adrress + '\'' +
                 ", carbonFootprint=" + carbonFootprint +
                 ", tokens=" + tokens +
