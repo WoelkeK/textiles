@@ -1,5 +1,7 @@
 package com.ambitious.team.textiles.config.service;
 
+import com.ambitious.team.textiles.config.api.exception.BagNotFoundException;
+import com.ambitious.team.textiles.config.api.exception.ClientNotFoundException;
 import com.ambitious.team.textiles.config.controller.ClientController;
 import com.ambitious.team.textiles.config.model.Client;
 import com.ambitious.team.textiles.config.repository.ClientRepository;
@@ -31,14 +33,20 @@ public class ClientService {
     }
 
     // R - read
-    public Client read(Long id) {
-        LOGGER.info("read(" + id + ")");
-        Optional<Client> optionalClient = clientRepository.findById(id);
-        var readClient = optionalClient.orElse(new Client());
-
-        LOGGER.info("read(...)=" + readClient);
-        return readClient;
+    public Client read(String login) throws ClientNotFoundException {
+        LOGGER.info("read(" + login + ")");
+        var clientList = clientRepository.findAll();
+        for (Client client : clientList)
+            if (client.getLogin().equals(login)) {
+                Long findId = client.getId();
+                Optional<Client> optionalClient = clientRepository.findById(findId);
+                var readClient = optionalClient.orElse(new Client());
+                LOGGER.info("read(...)=" + readClient);
+                return readClient;
+            }
+        throw new ClientNotFoundException("Client is not found");
     }
+
 
     // U - update
     public Client update(Client client) {
