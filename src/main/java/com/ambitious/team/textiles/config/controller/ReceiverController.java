@@ -2,7 +2,6 @@ package com.ambitious.team.textiles.config.controller;
 
 import com.ambitious.team.textiles.config.model.Receiver;
 import com.ambitious.team.textiles.config.service.ReceiverService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,10 +26,10 @@ public class ReceiverController {
     }
 
     @GetMapping
-    public List<Receiver> list() {
-        LOGGER.info("list()");
+    public List<Receiver> getList() {
+        LOGGER.info("getList()");
         List<Receiver> receivers = receiverService.getList();
-        LOGGER.info("list(...) = " + receivers);
+        LOGGER.info("getList(...) = " + receivers);
         return receivers;
     }
 

@@ -55,8 +55,8 @@ public class ReceiverService {
 
     public void delete(Long id) {
         LOGGER.info("delete()");
-        Optional<Receiver> receiver = receiverRepository.findById(id);
-        receiverRepository.delete(receiver.orElseThrow());
+        Optional<Receiver> deletedReceiver = receiverRepository.findById(id);
+        receiverRepository.delete(deletedReceiver.orElseThrow());
         LOGGER.info("delete(...)");
     }
 }
