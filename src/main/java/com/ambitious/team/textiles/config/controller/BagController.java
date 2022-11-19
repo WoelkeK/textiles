@@ -19,7 +19,7 @@ public class BagController {
     }
 
     // C - create
-    @PostMapping("/api/")
+    @PostMapping
     public Bag create(
             @RequestBody Bag bag) {
         LOGGER.info("create(" + bag + ")");
@@ -29,7 +29,7 @@ public class BagController {
     }
 
     // R - read
-    @GetMapping("/api/bags/")
+    @GetMapping("/{id}")
     public Bag read(
             @PathVariable(name = "id") Long id)
             throws BagNotFoundException {
@@ -39,7 +39,7 @@ public class BagController {
     }
 
     // U - update
-    @PutMapping("/api/bags/")
+    @PutMapping
     public Bag update(
             @RequestBody Bag bag) {
         LOGGER.info("update(" + bag + ")");
@@ -49,7 +49,7 @@ public class BagController {
     }
 
     // D - delete
-    @DeleteMapping("/api/bags/{id}")
+    @DeleteMapping("/{id}")
     public void delete(
             @PathVariable(name = "id") Long id) throws BagNotFoundException {
         LOGGER.info("delete(" + id + ")");
@@ -57,7 +57,7 @@ public class BagController {
     }
 
     // L - list
-    @GetMapping("/api/bags")
+    @GetMapping
     public List<Bag> list(Bag bag) {
         List<Bag> bags = bagService.list();
         LOGGER.info("list() = " + bags);
