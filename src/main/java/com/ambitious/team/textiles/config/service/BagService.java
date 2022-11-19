@@ -1,5 +1,6 @@
 package com.ambitious.team.textiles.config.service;
 
+import com.ambitious.team.textiles.config.api.exception.BagNotFoundException;
 import com.ambitious.team.textiles.config.model.Bag;
 import com.ambitious.team.textiles.config.repository.BagRepository;
 
@@ -24,10 +25,10 @@ public class BagService {
     }
 
     // R - read
-    public Bag read(Long bagId) {
-        LOGGER.info("read(" + bagId + ")");
-        Optional<Bag> optionalBag = bagRepository.findById(bagId);
-        Bag bag = optionalBag.orElseThrow(() -> new RuntimeException("Not found Bag with" + bagId + " ID"));
+    public Bag read(Long id) throws BagNotFoundException {
+        LOGGER.info("read(" + id + ")");
+        Optional<Bag> optionalBag = bagRepository.findById(id);
+        Bag bag = optionalBag.orElseThrow(() -> new BagNotFoundException("Not found Bag with" + id + " ID"));
         LOGGER.info("read(...)" + bag);
         return bag;
     }
@@ -41,10 +42,10 @@ public class BagService {
     }
 
     // D - delete
-    public void delete(Long bagId) {
-        LOGGER.info("delete()" + bagId);
-        Optional<Bag> byId = bagRepository.findById(bagId);
-        Bag bag = byId.orElseThrow(() -> new RuntimeException("Not found Bag with" + bagId + " ID"));
+    public void delete(Long id) throws BagNotFoundException {
+        LOGGER.info("delete()" + id);
+        Optional<Bag> byId = bagRepository.findById(id);
+        Bag bag = byId.orElseThrow(() -> new BagNotFoundException("Not found Bag with" + id + " ID"));
         bagRepository.delete(bag);
         LOGGER.info("delete(...)" + bag);
     }
