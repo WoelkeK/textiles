@@ -27,7 +27,7 @@ public class Receiver {
                 ", ReceiverId= '" + receiverId + '\'' +
                 ", name= '" + name + '\'' +
                 ", adrress='" + address + '\'' +
-                ", carbonFootprint=" + carbonFootprint +
+                ", carbonFootprint= " + carbonFootprint +
                 ", tokens=" + tokens +
                 '}';
     }
