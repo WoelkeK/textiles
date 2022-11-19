@@ -16,7 +16,7 @@ public class Receiver {
     private Long id;
     private String receiverId;
     private String name;
-    private String adrress;
+    private String address;
     private int carbonFootprint;
     private int tokens;
 
@@ -26,7 +26,7 @@ public class Receiver {
                 "id=" + id +
                 ", ReceiverId='" + receiverId + '\'' +
                 ", name= '" + name + '\'' +
-                ", adrress='" + adrress + '\'' +
+                ", adrress='" + address + '\'' +
                 ", carbonFootprint=" + carbonFootprint +
                 ", tokens=" + tokens +
                 '}';
