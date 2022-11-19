@@ -66,7 +66,6 @@ public class ClientController {
     public List<Client> list() {
         LOGGER.info("list()");
         var clientList = clientService.list();
-
         LOGGER.info("list()=" + clientList);
         return clientList;
     }
