@@ -18,6 +18,16 @@ public class Bag {
     private Double weight;
     private Boolean sort;
 
+    public Bag() {
+    }
+
+    public Bag(Long id, Long bagId, Double weight, Boolean sort) {
+        this.id = id;
+        this.bagId = bagId;
+        this.weight = weight;
+        this.sort = sort;
+    }
+
     @Override
     public String toString() {
         return "Bag{" +
