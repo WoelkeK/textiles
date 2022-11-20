@@ -2,17 +2,14 @@ package com.ambitious.team.textiles.config.web;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 @Configuration
@@ -23,29 +20,32 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         LOGGER.info("securityFilterChain(" + http + ")");
         http
-                .cors().and()
+                .cors().disable()
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/**").permitAll()
+                        .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin((form) -> form.permitAll())
-                .logout((logout) -> logout.permitAll());
+                .httpBasic();
+
+//                .formLogin((form) -> form.permitAll())
+//                .logout((logout) -> logout.permitAll());
 
         LOGGER.info("securityFilterChain(...)");
         return http.build();
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        LOGGER.info("corsConfigurationSource()");
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        LOGGER.info("corsConfigurationSource(...) = " + source);
-        return source;
-    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        LOGGER.info("corsConfigurationSource()");
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("*"));
+//        configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH"));
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        LOGGER.info("corsConfigurationSource(...) = " + source);
+//        return source;
+//    }
 
     @Bean
     public UserDetailsService userDetailsService() {
