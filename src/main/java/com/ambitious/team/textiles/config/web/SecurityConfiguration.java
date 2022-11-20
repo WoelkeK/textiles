@@ -22,7 +22,7 @@ public class SecurityConfiguration {
         http
                 .cors().disable()
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/**").permitAll()
+//                        .antMatchers("/**").permitAll()
                         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()
                 )
