@@ -13,11 +13,15 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 @Configuration
 public class SecurityConfiguration {
+    private static final Logger LOGGER = Logger.getLogger(SecurityConfiguration.class.getName());
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        LOGGER.info("securityFilterChain(" + http + ")");
         http
                 .cors().and()
                 .authorizeHttpRequests((requests) -> requests
@@ -27,16 +31,19 @@ public class SecurityConfiguration {
                 .formLogin((form) -> form.permitAll())
                 .logout((logout) -> logout.permitAll());
 
+        LOGGER.info("securityFilterChain(...)");
         return http.build();
     }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
+        LOGGER.info("corsConfigurationSource()");
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+        LOGGER.info("corsConfigurationSource(...) = " + source);
         return source;
     }
 
