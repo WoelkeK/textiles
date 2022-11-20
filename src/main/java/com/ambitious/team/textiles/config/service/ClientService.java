@@ -1,7 +1,7 @@
 package com.ambitious.team.textiles.config.service;
 
-import com.ambitious.team.textiles.config.api.exception.BagNotFoundException;
 import com.ambitious.team.textiles.config.api.exception.ClientNotFoundException;
+import com.ambitious.team.textiles.config.api.exception.LoginExistException;
 import com.ambitious.team.textiles.config.controller.ClientController;
 import com.ambitious.team.textiles.config.model.Client;
 import com.ambitious.team.textiles.config.repository.ClientRepository;
@@ -23,21 +23,25 @@ public class ClientService {
     }
 
     // C - create
-    public Client create(Client client) {
+    public Client create(Client client, String login) throws LoginExistException {
         LOGGER.info("create(" + client + ")");
-
-        Client createdClient = clientRepository.save(client);
-
-        LOGGER.info("create(...)=" + createdClient);
-        return createdClient;
+        var clientList = clientRepository.findAll();
+        for (Client createdClient : clientList)
+            if (createdClient.getLogin().equals(login)) {
+                throw new LoginExistException("Login Exist");
+            } else {
+                Client createClient = clientRepository.save(client);
+                LOGGER.info("create(...)=" + createClient);
+                return createClient;
+            } throw new LoginExistException("Create Client fold");
     }
 
     // R - read
-    public Client read(String login) throws ClientNotFoundException {
+    public Client read(String login, String password) throws ClientNotFoundException {
         LOGGER.info("read(" + login + ")");
         var clientList = clientRepository.findAll();
         for (Client client : clientList)
-            if (client.getLogin().equals(login)) {
+            if (client.getLogin().equals(login) && client.getPassword().equals(password)) {
                 Long findId = client.getId();
                 Optional<Client> optionalClient = clientRepository.findById(findId);
                 var readClient = optionalClient.orElse(new Client());

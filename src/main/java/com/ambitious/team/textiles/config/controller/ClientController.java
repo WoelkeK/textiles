@@ -1,6 +1,7 @@
 package com.ambitious.team.textiles.config.controller;
 
 import com.ambitious.team.textiles.config.api.exception.ClientNotFoundException;
+import com.ambitious.team.textiles.config.api.exception.LoginExistException;
 import com.ambitious.team.textiles.config.model.Client;
 import com.ambitious.team.textiles.config.service.ClientService;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,19 +29,19 @@ public class ClientController {
     }
 
     @PostMapping
-    public Client create(@RequestBody Client client) {
+    public Client create(@RequestBody Client client, String login) throws LoginExistException {
         LOGGER.info("create(" + client + ")");
 
-        Client createdClient = clientService.create(client);
+        Client createdClient = clientService.create(client,login);
 
         LOGGER.info("create(...)");
         return createdClient;
     }
 
     @GetMapping("/{login}")
-    public Client read(@PathVariable String login) throws ClientNotFoundException {
-        LOGGER.info("read(" + login + ")");
-        var readClient = clientService.read(login);
+    public Client read(@PathVariable String login, String password) throws ClientNotFoundException {
+        LOGGER.info("read(" + login + "" + "" + password + ")");
+        var readClient = clientService.read(login, password);
         LOGGER.info("read(...)=" + readClient);
         return readClient;
     }
@@ -66,7 +67,6 @@ public class ClientController {
     public List<Client> list() {
         LOGGER.info("list()");
         var clientList = clientService.list();
-
         LOGGER.info("list()=" + clientList);
         return clientList;
     }
