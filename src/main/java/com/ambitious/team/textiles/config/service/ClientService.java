@@ -23,34 +23,35 @@ public class ClientService {
     }
 
     // C - create
-    public Client create(Client client, String login) throws LoginExistException {
+    public Client create(Client client){
         LOGGER.info("create(" + client + ")");
-        var clientList = clientRepository.findAll();
-        for (Client createdClient : clientList)
-            if (createdClient.getLogin().equals(login)) {
-                throw new LoginExistException("Login Exist");
-            } else {
-                Client createClient = clientRepository.save(client);
-                LOGGER.info("create(...)=" + createClient);
-                return createClient;
-            } throw new LoginExistException("Create Client fold");
+        Client createClient = clientRepository.save(client);
+        LOGGER.info("create(...)=" + createClient);
+        return createClient;
     }
 
     // R - read
-    public Client read(String login, String password) throws ClientNotFoundException {
-        LOGGER.info("read(" + login + ")");
+    public Optional<Client> read(Long id) throws ClientNotFoundException {
+        LOGGER.info("read(" + id + ")");
+        Optional<Client> optionalClient = clientRepository.findById(id);
+        optionalClient.orElseThrow(() -> new ClientNotFoundException("Not found Client with" + id + " ID"));
+        return optionalClient;
+    }
+
+    // L -  login
+    public Client login(String login, String password) throws ClientNotFoundException {
+        LOGGER.info("login(" + login + "" + password + ")");
         var clientList = clientRepository.findAll();
         for (Client client : clientList)
             if (client.getLogin().equals(login) && client.getPassword().equals(password)) {
                 Long findId = client.getId();
                 Optional<Client> optionalClient = clientRepository.findById(findId);
                 var readClient = optionalClient.orElse(new Client());
-                LOGGER.info("read(...)=" + readClient);
+                LOGGER.info("login(...)=" + readClient);
                 return readClient;
             }
         throw new ClientNotFoundException("Client is not found");
     }
-
 
     // U - update
     public Client update(Client client) {

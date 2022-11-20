@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @RestController
@@ -29,21 +30,27 @@ public class ClientController {
     }
 
     @PostMapping
-    public Client create(@RequestBody Client client, String login) throws LoginExistException {
+    public Client create(@RequestBody Client client){
         LOGGER.info("create(" + client + ")");
-
-        Client createdClient = clientService.create(client,login);
-
+        Client createdClient = clientService.create(client);
         LOGGER.info("create(...)");
         return createdClient;
     }
 
-    @GetMapping("/{login}")
-    public Client read(@PathVariable String login, String password) throws ClientNotFoundException {
-        LOGGER.info("read(" + login + "" + "" + password + ")");
-        var readClient = clientService.read(login, password);
+    @GetMapping("/{id}")
+    public Optional<Client> read(@PathVariable Long id) throws ClientNotFoundException {
+        LOGGER.info("read(" + id + ")");
+        var readClient = clientService.read(id);
         LOGGER.info("read(...)=" + readClient);
         return readClient;
+    }
+
+    @GetMapping("/{login}")
+    public Client login(@PathVariable String login, String password) throws ClientNotFoundException {
+        LOGGER.info("login()" + login + "" + password);
+        Client logClient = clientService.login(login, password);
+        return logClient;
+
     }
 
     @PutMapping
